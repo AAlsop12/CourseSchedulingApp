@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import actions from '../actions'
+import { connect, dispatch } from 'react-redux';
+import { fetchCourses } from '../actions'
 
 class CourseLibrary extends Component {
 
@@ -8,6 +8,10 @@ class CourseLibrary extends Component {
         super(props)
         
         this.renderCourse = this.renderCourse.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.fetchCourses()
     }
 
     renderCourse(course) {
@@ -31,7 +35,7 @@ class CourseLibrary extends Component {
         return (
             <ul>
 
-                {alert(JSON.stringify(this.props.fetchCourses()))}
+                {/* {alert(JSON.stringify())} */}
                 {this.props.courses.map(this.renderCourse)}
 
             </ul>
@@ -40,10 +44,19 @@ class CourseLibrary extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(`state courses are ${JSON.stringify(state.courses)}`)
+    console.log(`state courses are : ${JSON.stringify(state.courses)}`)
     return { courses: state.courses }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchCourses:()=> {
+        dispatch(fetchCourses())
+        }
+
+    }
+
+}
 
 
-export default connect(mapStateToProps, actions)(CourseLibrary);
+export default connect(mapStateToProps, mapDispatchToProps)(CourseLibrary);
