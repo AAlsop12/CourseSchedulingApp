@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import actions from '../actions'
 
 class CourseLibrary extends Component {
 
@@ -30,6 +31,7 @@ class CourseLibrary extends Component {
         return (
             <ul>
 
+                {alert(JSON.stringify(this.props.fetchCourses()))}
                 {this.props.courses.map(this.renderCourse)}
 
             </ul>
@@ -42,4 +44,6 @@ function mapStateToProps(state) {
     return { courses: state.courses }
 }
 
-export default connect(mapStateToProps)(CourseLibrary);
+
+
+export default connect(mapStateToProps, actions)(CourseLibrary);
